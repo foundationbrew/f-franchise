@@ -26,7 +26,6 @@ export const translations = {
         'errors.phone': 'Введіть коректний номер телефону',
         'errors.phoneMin': 'Номер телефону має містити мінімум 7 цифр',
         'errors.locationFormat': 'Країна та місто можуть містити лише літери',
-        'errors.messageMin': 'Повідомлення має містити мінімум 5 символів',
         'errors.messageTooLong': 'Повідомлення не може бути довшим за 255 символів'
     },
     en: {
@@ -56,7 +55,6 @@ export const translations = {
         'errors.phone': 'Please enter a valid phone number',
         'errors.phoneMin': 'Phone number must contain at least 7 digits',
         'errors.locationFormat': 'Country and city can only contain letters',
-        'errors.messageMin': 'Message must be at least 5 characters',
         'errors.messageTooLong': 'Message cannot be longer than 255 characters'
     }
 };
