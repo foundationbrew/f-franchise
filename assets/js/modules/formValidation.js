@@ -46,13 +46,9 @@ export function validateForm(data) {
         }
     }
 
-    // Message validation (optional, but if filled - min 5, max 255)
-    if (data.message && data.message.trim() !== '') {
-        if (data.message.trim().length < 5) {
-            errors.message = getTranslation('errors.messageMin', lang);
-        } else if (data.message.length > 255) {
-            errors.message = getTranslation('errors.messageTooLong', lang);
-        }
+    // Message length validation (optional field, but if filled must be <= 255)
+    if (data.message && data.message.length > 255) {
+        errors.message = getTranslation('errors.messageTooLong', lang);
     }
 
     return errors;
