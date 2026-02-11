@@ -21,8 +21,12 @@ export const translations = {
         'franchise.policy': 'Натискаючи кнопку, ви погоджуєтесь з <a href="/privacy">політикою конфіденційності</a>',
         'contacts.socials.title': 'Слідкуйте за нами в соціальних мережах',
         'errors.required': 'Це поле обов\'язкове',
+        'errors.name': 'Ім\'я може містити лише літери',
         'errors.email': 'Введіть коректну email адресу',
         'errors.phone': 'Введіть коректний номер телефону',
+        'errors.phoneMin': 'Номер телефону має містити мінімум 7 цифр',
+        'errors.locationFormat': 'Країна та місто можуть містити лише літери',
+        'errors.messageMin': 'Повідомлення має містити мінімум 5 символів',
         'errors.messageTooLong': 'Повідомлення не може бути довшим за 255 символів'
     },
     en: {
@@ -47,8 +51,12 @@ export const translations = {
         'franchise.policy': 'By clicking the button, you agree to the <a href="/privacy">privacy policy</a>',
         'contacts.socials.title': 'Follow us on social media',
         'errors.required': 'This field is required',
+        'errors.name': 'Name can only contain letters',
         'errors.email': 'Please enter a valid email address',
         'errors.phone': 'Please enter a valid phone number',
+        'errors.phoneMin': 'Phone number must contain at least 7 digits',
+        'errors.locationFormat': 'Country and city can only contain letters',
+        'errors.messageMin': 'Message must be at least 5 characters',
         'errors.messageTooLong': 'Message cannot be longer than 255 characters'
     }
 };
