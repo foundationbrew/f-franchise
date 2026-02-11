@@ -26,6 +26,19 @@ function updateURL(lang) {
     window.history.replaceState(null, '', newURL);
 }
 
+function updateInternalLinks(lang) {
+    document.querySelectorAll('a[href]').forEach(link => {
+        const href = link.getAttribute('href');
+
+        // Only update local links (starting with ./ or relative)
+        if (!href || href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('#')) return;
+
+        const url = new URL(link.href);
+        url.searchParams.set('lang', lang);
+        link.setAttribute('href', url.pathname + url.search);
+    });
+}
+
 export function initLanguageSwitcher() {
     const detectedLang = getLangFromURL();
     setCurrentLanguage(detectedLang);
@@ -63,6 +76,9 @@ export function updateLanguage(lang) {
             }
         }
     });
+
+    // Update internal links with current language
+    updateInternalLinks(lang);
 
     updatePhoneMask(lang);
 }
