@@ -1,26 +1,18 @@
-// formHandler.js - Form submission and handling
-
 import { validateForm, sanitizeFormData } from './formValidation.js';
 import { setFieldError, clearAllErrors } from './textFields.js';
+import { getCurrentLanguage } from './languageSwitcher.js';
 
-/**
- * Initialize form submission handler
- */
+const API_URL = 'https://api.foundationcoffee.pl/api/v2/forms/franchise/submit';
+
 export function initForm() {
     const form = document.getElementById('reviewForm');
-
     if (!form) return;
 
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
-
-        // Clear previous errors
         clearAllErrors();
 
-        // Get form data
         const formData = getFormData();
-
-        // Validate
         const errors = validateForm(formData);
 
         if (Object.keys(errors).length > 0) {
@@ -29,15 +21,10 @@ export function initForm() {
             return;
         }
 
-        // Submit
         await submitForm(formData);
     });
 }
 
-/**
- * Get form data from form fields
- * @returns {Object} Form data object
- */
 export function getFormData() {
     const form = document.getElementById('reviewForm');
     const formData = new FormData(form);
@@ -52,64 +39,57 @@ export function getFormData() {
     };
 }
 
-/**
- * Display validation errors on form fields
- * @param {Object} errors - Errors object with field names as keys
- */
 export function displayErrors(errors) {
     Object.keys(errors).forEach(fieldName => {
         const fieldDiv = document.querySelector(`[data-field="${fieldName}"]`);
         if (!fieldDiv) return;
-
         setFieldError(fieldDiv, errors[fieldName]);
     });
 }
 
-/**
- * Scroll to first error field
- */
 export function scrollToFirstError() {
     const firstError = document.querySelector('.textfield_error');
     if (firstError) {
         const offset = firstError.getBoundingClientRect().top + window.pageYOffset - 64;
-        window.scrollTo({
-            top: offset,
-            behavior: 'smooth'
-        });
+        window.scrollTo({ top: offset, behavior: 'smooth' });
     }
 }
 
-/**
- * Submit form data - simplified version
- * @param {Object} data - Form data to submit
- */
 export async function submitForm(data) {
     const submitBtn = document.querySelector('button[type="submit"]');
-
-    // Show loading state
     setButtonLoading(submitBtn, true);
 
-    // Clean and prepare data
     const cleanData = sanitizeFormData(data);
 
-    // Log data to console (for now, until API endpoint is ready)
-    console.log('Form data ready to submit:', cleanData);
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(cleanData)
+        });
 
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Hide loading state
-    setButtonLoading(submitBtn, false);
-
-    // Redirect to success page
-    window.location.href = './success.html';
+        if (response.ok) {
+            const lang = getCurrentLanguage();
+            window.location.href = `./success.html?lang=${lang}`;
+        } else if (response.status === 422) {
+            const errorData = await response.json();
+            if (errorData.errors) {
+                displayErrors(errorData.errors);
+                scrollToFirstError();
+            }
+        } else {
+            throw new Error(`Server error: ${response.status}`);
+        }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        // Можно показать пользователю сообщение об ошибке
+    } finally {
+        setButtonLoading(submitBtn, false);
+    }
 }
 
-/**
- * Set button loading state
- * @param {HTMLButtonElement} button - Submit button element
- * @param {boolean} isLoading - Whether button should show loading state
- */
 function setButtonLoading(button, isLoading) {
     const btnLoader = button.querySelector('.btn__loader');
 
@@ -123,42 +103,3 @@ function setButtonLoading(button, isLoading) {
         btnLoader.style.display = 'none';
     }
 }
-
-/**
- * Configure API endpoint (call this when endpoint is ready)
- * @param {string} endpoint - API endpoint URL
- */
-export function setApiEndpoint(endpoint) {
-    window.FORM_API_ENDPOINT = endpoint;
-}
-
-/**
- * Submit to actual API (uncomment when ready)
- */
-/*
-export async function submitToApi(data) {
-    const endpoint = window.FORM_API_ENDPOINT || '/api/v1/feedback';
-
-    try {
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-            return { success: true };
-        } else if (response.status === 422) {
-            const errorData = await response.json();
-            return { success: false, errors: errorData.errors };
-        } else {
-            throw new Error('Server error');
-        }
-    } catch (error) {
-        console.error('Error submitting form:', error);
-        throw error;
-    }
-}
-*/
