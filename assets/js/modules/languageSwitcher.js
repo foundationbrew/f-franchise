@@ -1,5 +1,6 @@
 import { getTranslation } from './translations.js';
 import { updatePhoneMask } from './phoneMask.js';
+import {revalidateForm} from "./formHandler.js";
 
 let currentLang = 'en';
 
@@ -77,8 +78,7 @@ export function updateLanguage(lang) {
         }
     });
 
-    // Update internal links with current language
     updateInternalLinks(lang);
-
     updatePhoneMask(lang);
+    revalidateForm();
 }

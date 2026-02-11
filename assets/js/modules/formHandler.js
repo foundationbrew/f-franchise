@@ -39,6 +39,24 @@ export function getFormData() {
     };
 }
 
+export function revalidateForm() {
+    const form = document.getElementById('reviewForm');
+    if (!form) return;
+
+    // Check if there are any visible errors
+    const hasErrors = form.querySelector('.textfield_error, .field_error');
+    if (!hasErrors) return;
+
+    clearAllErrors();
+
+    const formData = getFormData();
+    const errors = validateForm(formData);
+
+    if (Object.keys(errors).length > 0) {
+        displayErrors(errors);
+    }
+}
+
 export function displayErrors(errors) {
     Object.keys(errors).forEach(fieldName => {
         const fieldDiv = document.querySelector(`[data-field="${fieldName}"]`);
