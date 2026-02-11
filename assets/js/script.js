@@ -17,8 +17,6 @@ function init() {
     const country = getCountry();
     initSocials('socialsList', country);
 
-    // Set default language
-    updateLanguage('uk');
 }
 
 // Run on DOM ready
