@@ -1,7 +1,7 @@
 import { getTranslation } from './translations.js';
 import { updatePhoneMask } from './phoneMask.js';
 
-let currentLang = 'ua';
+let currentLang = 'en';
 
 const supportedLangs = ['ua', 'en'];
 
@@ -16,7 +16,7 @@ export function setCurrentLanguage(lang) {
 function getLangFromURL() {
     const params = new URLSearchParams(window.location.search);
     const lang = params.get('lang');
-    return supportedLangs.includes(lang) ? lang : 'ua';
+    return supportedLangs.includes(lang) ? lang : 'en';
 }
 
 function updateURL(lang) {
