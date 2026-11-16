@@ -30,8 +30,8 @@ export const translations = {
     },
     en: {
         'franchise.title': 'We are opening Foundation Coffee Place for Europe',
-        'franchise.top.descr_1.p1': 'This is not just a coffee shop — it\'s a culture, a team, and a brand built seriously and for the long term. In March, we will officially present the franchise, and now we are gathering those who want to be with us from the very beginning. Leave a request — we will answer all questions and discuss how we can move forward together.',
-        'franchise.top.descr_1.p2': 'Foundation Coffee Place. Become part of the beginning.',
+        'franchise.top.descr_1.p1': 'Foundation Coffee Place is more than just a coffee shop. It\'s a community built around great coffee, shared values, and people who love what they do. We\'re getting ready to introduce our franchise in March and are looking for partners who want to grow with us. Interested in joining us? Get in touch, and let\'s talk about the opportunities.',
+        'franchise.top.descr_1.p2': 'Foundation Coffee Place. Be part of our story.',
         'franchise.review.title': 'Become a Franchisee',
         'franchise.review.text': 'If you have any wishes, questions, or problems while filling out the form - please write to us at info@foundation.ua. We will be happy to help!',
         'franchise.review.thanks': 'Thank you, our manager will contact you soon',
